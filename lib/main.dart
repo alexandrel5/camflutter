@@ -3,14 +3,18 @@ import 'package:flutter/material.dart';
 
 import 'camera/take_picture_screen.dart';
 
+late List<CameraDescription> cameras;
+
 void main() async {
-  List<CameraDescription> cameras = await availableCameras();
-  runApp(MyApp(camera: cameras));
+  WidgetsFlutterBinding.ensureInitialized();
+
+  cameras = await availableCameras();
+
+  runApp(const MyApp());
 }
 
 class MyApp extends StatelessWidget {
-  late List<CameraDescription> camera;
-  MyApp({Key? key, required List<CameraDescription> camera}) : super(key: key);
+  const MyApp({Key? key}) : super(key: key);
 
   @override
   Widget build(BuildContext context) {
@@ -19,7 +23,7 @@ class MyApp extends StatelessWidget {
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: TakePictureScreen(camera: camera.last),
+      home: TakePictureScreen(camera: cameras.last),
     );
   }
 }
